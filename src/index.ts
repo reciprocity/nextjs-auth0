@@ -35,7 +35,8 @@ import {
   Session,
   AccessTokenRequest,
   GetAccessTokenResult,
-  Claims
+  Claims,
+  GetCookieStore
 } from './session/';
 import {
   withPageAuthRequiredFactory,
@@ -62,6 +63,7 @@ function getInstance(): SignInWithAuth0 & { sessionCache: SessionCache } {
   return instance;
 }
 
+
 export const _initAuth = (params?: ConfigParameters): SignInWithAuth0 & { sessionCache: SessionCache } => {
   const { baseConfig, nextConfig } = getConfig(params);
 
@@ -76,6 +78,7 @@ export const _initAuth = (params?: ConfigParameters): SignInWithAuth0 & { sessio
 
   // Init Next layer (with next config)
   const getSession = sessionFactory(sessionCache);
+  const getCookieStore = () => cookieStore;
   const getAccessToken = accessTokenFactory(nextConfig, getClient, sessionCache);
   const withApiAuthRequired = withApiAuthRequiredFactory(sessionCache);
   const withPageAuthRequired = withPageAuthRequiredFactory(nextConfig.routes.login, () => sessionCache);
@@ -88,6 +91,7 @@ export const _initAuth = (params?: ConfigParameters): SignInWithAuth0 & { sessio
 
   return {
     sessionCache,
+    getCookieStore,
     getSession,
     getAccessToken,
     withApiAuthRequired,
@@ -107,6 +111,7 @@ export const initAuth0: InitAuth0 = (params) => {
 };
 
 const getSessionCache = () => getInstance().sessionCache;
+export const getCookieStore: GetCookieStore = () => getInstance().getCookieStore();
 export const getSession: GetSession = (...args) => getInstance().getSession(...args);
 export const getAccessToken: GetAccessToken = (...args) => getInstance().getAccessToken(...args);
 export const withApiAuthRequired: WithApiAuthRequired = (...args) => getInstance().withApiAuthRequired(...args);
@@ -157,5 +162,6 @@ export {
   AfterRefetch,
   LoginOptions,
   LogoutOptions,
-  GetLoginState
+  GetLoginState,
+  GetCookieStore
 };

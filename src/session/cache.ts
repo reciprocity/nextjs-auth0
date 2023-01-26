@@ -12,7 +12,7 @@ export default class SessionCache implements ISessionCache {
   private cache: WeakMap<NextApiOrPageRequest, Session | null>;
   private iatCache: WeakMap<NextApiOrPageRequest, number | undefined>;
 
-  constructor(private config: Config, private cookieStore: CookieStore) {
+  constructor(public config: Config, public cookieStore: CookieStore) {
     this.cache = new WeakMap();
     this.iatCache = new WeakMap();
   }

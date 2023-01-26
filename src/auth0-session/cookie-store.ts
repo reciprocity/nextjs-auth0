@@ -176,6 +176,8 @@ export default class CookieStore {
     const iat = typeof createdAt === 'number' ? createdAt : uat;
     const exp = this.calculateExp(iat, uat);
 
+    debug('setting cookie expiration to: ' + new Date(exp * 1000));
+
     const cookieOptions: CookieSerializeOptions = {
       ...cookieConfig
     };

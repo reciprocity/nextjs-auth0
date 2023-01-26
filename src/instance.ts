@@ -1,4 +1,4 @@
-import { GetSession, GetAccessToken } from './session';
+import { GetSession, GetAccessToken, GetCookieStore } from './session';
 import { GetServerSidePropsWrapper, WithApiAuthRequired, WithPageAuthRequired } from './helpers';
 import { HandleAuth, HandleCallback, HandleLogin, HandleLogout, HandleProfile } from './handlers';
 import { ConfigParameters } from './auth0-session';
@@ -13,6 +13,8 @@ import { ConfigParameters } from './auth0-session';
  * @category Server
  */
 export interface SignInWithAuth0 {
+  getCookieStore: GetCookieStore; 
+
   /**
    * Session getter
    */
