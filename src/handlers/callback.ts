@@ -1,7 +1,7 @@
 import { IncomingMessage } from 'http';
 import { strict as assert } from 'assert';
 import { NextApiResponse, NextApiRequest } from 'next';
-import { AuthorizationParameters, HandleCallback as BaseHandleCallback } from '../auth0-session';
+import { AuthorizationParameters, Config, HandleCallback as BaseHandleCallback } from '../auth0-session';
 import { Session } from '../session';
 import { assertReqRes } from '../utils/assert';
 import { NextConfig } from '../config';
@@ -91,6 +91,7 @@ export type AfterCallback = (
   req: NextApiRequest,
   res: NextApiResponse,
   session: Session,
+  config: Config,
   state?: { [key: string]: any }
 ) => Promise<Session | undefined> | Session | undefined;
 
