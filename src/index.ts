@@ -9,7 +9,8 @@ import {
   clientFactory,
   loginHandler as baseLoginHandler,
   logoutHandler as baseLogoutHandler,
-  callbackHandler as baseCallbackHandler
+  callbackHandler as baseCallbackHandler,
+  Config
 } from './auth0-session';
 import {
   handlerFactory,
@@ -55,7 +56,7 @@ import {
   PageRoute
 } from './helpers';
 import version from './version';
-import { getConfig, getLoginUrl, ConfigParameters } from './config';
+import { getConfig, getLoginUrl, ConfigParameters, BaseConfig } from './config';
 import { setIsUsingNamedExports, setIsUsingOwnInstance } from './utils/instance-check';
 import { IncomingMessage, ServerResponse } from 'http';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -119,6 +120,8 @@ export interface Auth0Server {
    * Create the main handlers for your api routes.
    */
   handleAuth: HandleAuth;
+  
+  baseConfig: BaseConfig;
 }
 
 /**
@@ -195,7 +198,8 @@ export const _initAuth = (params?: ConfigParameters): Auth0Server & { sessionCac
     handleLogout,
     handleCallback,
     handleProfile,
-    handleAuth
+    handleAuth,
+    baseConfig
   };
 };
 
@@ -235,6 +239,7 @@ export {
 } from './auth0-session';
 
 export {
+  Config,
   ConfigParameters,
   HandleAuth,
   HandleLogin,

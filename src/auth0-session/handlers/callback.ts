@@ -24,6 +24,7 @@ export type AfterCallback = (
   req: any,
   res: any,
   session: any,
+  config: Config,
   state?: Record<string, any>
 ) => Promise<any> | any | undefined;
 
@@ -98,7 +99,7 @@ export default function callbackHandlerFactory(
     let session = await sessionCache.fromTokenSet(tokenSet);
 
     if (options?.afterCallback) {
-      session = await options.afterCallback(req, res, session, openidState);
+      session = await options.afterCallback(req, res, session, config, openidState);
     }
 
     if (session) {
